@@ -130,7 +130,7 @@ export const RegistrationForm = () => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <div className="mt-5">
         <Navtools page={page} setPage={setPage} />
       </div>

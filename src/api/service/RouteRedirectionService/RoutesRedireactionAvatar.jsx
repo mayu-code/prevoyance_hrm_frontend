@@ -1,13 +1,13 @@
 export const selectRoute = (role, action) => {
   switch (role) {
     case "SUPERADMIN":
-      return `/user/sadmin/${action}`;
+      return `/sadmin/${action}`;
     case "ADMIN":
-      return `/user/admin/${action}`;
+      return `/admin/${action}`;
     case "HRMANAGER":
-      return `/user/hr-manager/${action}`;
+      return `/hr-manager/${action}`;
     case "HREXECUTIVE":
-      return `/user/hr-executive/${action}`;
+      return `/hr-executive/${action}`;
     default:
       return "/";
   }

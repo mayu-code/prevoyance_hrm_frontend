@@ -2,63 +2,62 @@ import React, { useState } from "react";
 import OnboardingForm from "../onboarding/OnboardingForm";
 import { PulseLoader } from "../../../components/ui/Loader/Loaders";
 
-export const CandidateTable = ({
-  candidates,
-  selectedCandidates,
-  setSelectedCandidates,
+export const EmployeeTable = ({
+  employees,
+  selectedEmployees,
+  setSelectedEmployees,
   isLoading,
-  refetchCandidates,
 }) => {
   const [showOnboardingForm, setShowOnboardingForm] = useState(false);
   const [onboardingData, setOnboardingData] = useState(null);
 
   // Handle row click to open the onboarding form
   const handleRowClick = (candidate) => {
-    setOnboardingData({
-      id: candidate.id,
-      name: `${candidate.firstName} ${candidate.lastName}`,
-      email: candidate.email,
-      position: candidate.position,
-      department: candidate.department,
-    });
-    setShowOnboardingForm(true);
+    // setOnboardingData({
+    //   id: candidate.id,
+    //   name: `${candidate.firstName} ${candidate.lastName}`,
+    //   email: candidate.email,
+    //   position: candidate.position,
+    //   department: candidate.department,
+    // });
+    // setShowOnboardingForm(true);
   };
 
-  // Handle checkbox change for individual candidates
+  // Handle checkbox change for individual employees
   const handleCheckboxChange = (candidateId) => {
-    if (selectedCandidates.includes(candidateId)) {
-      setSelectedCandidates(
-        selectedCandidates.filter((id) => id !== candidateId)
+    if (selectedEmployees.includes(candidateId)) {
+      setSelectedEmployees(
+        selectedEmployees.filter((id) => id !== candidateId)
       );
     } else {
-      setSelectedCandidates([...selectedCandidates, candidateId]);
+      setSelectedEmployees([...selectedEmployees, candidateId]);
     }
   };
 
   // Handle "Select All" checkbox
   const handleSelectAll = (e) => {
     if (e.target.checked) {
-      setSelectedCandidates(candidates.map((candidate) => candidate.id));
+      setSelectedEmployees(employees.map((candidate) => candidate.id));
     } else {
-      setSelectedCandidates([]);
+      setSelectedEmployees([]);
     }
   };
 
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full  table-auto border-collapse border border-gray-200">
+      <table className="min-w-full table-auto border-collapse border border-gray-200">
         <thead>
           <tr className="bg-blue-300">
-            <th className="py-2 px-4 text-left border border-gray-200">
+            {/* <th className="py-2 px-4 text-left border border-gray-200">
               <input
                 type="checkbox"
                 onChange={handleSelectAll}
                 checked={
-                  selectedCandidates.length === candidates?.length &&
-                  candidates?.length > 0
+                  selectedEmployees.length === employees?.length &&
+                  employees?.length > 0
                 }
               />
-            </th>
+            </th> */}
             <th className="py-2 px-4 text-left border border-gray-200">ID</th>
             <th className="py-2 px-4 text-left border border-gray-200">
               First Name
@@ -87,25 +86,25 @@ export const CandidateTable = ({
                 <PulseLoader />
               </td>
             </tr>
-          ) : candidates?.length === 0 ? (
+          ) : employees?.length === 0 ? (
             <tr>
               <td colSpan="8" className="py-10 text-center text-gray-500">
-                No Candidates Found
+                No Employees Found
               </td>
             </tr>
           ) : (
-            candidates?.map((candidate) => (
+            employees?.map((candidate) => (
               <tr
                 key={candidate.id}
                 className="bg-white text-gray-800 hover:bg-blue-50 hover:cursor-pointer"
               >
-                <td className="py-2 px-4 border border-gray-200">
+                {/* <td className="py-2 px-4 border border-gray-200">
                   <input
                     type="checkbox"
-                    checked={selectedCandidates.includes(candidate.id)}
+                    checked={selectedEmployees.includes(candidate.id)}
                     onChange={() => handleCheckboxChange(candidate.id)}
                   />
-                </td>
+                </td> */}
                 <td
                   className="py-2 px-4 border border-gray-200"
                   onClick={() => handleRowClick(candidate)}
@@ -160,7 +159,6 @@ export const CandidateTable = ({
           showModal={showOnboardingForm}
           setShowModal={setShowOnboardingForm}
           preFilledData={onboardingData}
-          refetchCandidates={refetchCandidates}
         />
       )}
     </div>

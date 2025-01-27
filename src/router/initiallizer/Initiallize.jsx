@@ -12,8 +12,8 @@ export const initializeUser = async (
   }
 
   try {
-    const decryptedUser = decryptData(data);
-    setUser1(decryptedUser);
+    // const decryptedUser = decryptData(data);
+    // setUser1(data);
 
     // Fetch user data based on role
     const user = await getUserByJwtService(jwtToken);

@@ -8,6 +8,8 @@ import { FaFileUpload, FaUsers, FaUserTimes } from "react-icons/fa";
 import { IoLogOut, IoPersonAdd } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import { selectRoute } from "../../api/service/RouteRedirectionService/RoutesRedireactionAvatar";
+import { clearUserCookie } from "../../cookies/UserCookie";
+import { PiUserSwitchBold } from "react-icons/pi";
 
 export const Sidebar = ({ user, isOpen, setIsOpen, handleClick }) => {
   const dispatch = useDispatch();
@@ -20,6 +22,7 @@ export const Sidebar = ({ user, isOpen, setIsOpen, handleClick }) => {
       if (token) {
         localStorage.removeItem("jwt");
         dispatch(deleteUser());
+        clearUserCookie();
         navigate("/login");
       }
     }
@@ -60,25 +63,57 @@ export const Sidebar = ({ user, isOpen, setIsOpen, handleClick }) => {
               Dashboard
             </div>
 
-            <NavLink
-              className={({ isActive }) =>
-                `p-3 hover:text-white font-medium  hover:bg-blue-700 rounded-md ${handleActiveLink(
-                  { isActive }
-                )}`
-              }
-              to={selectRoute(user?.role, "all-candidates")}
-            >
-              <li className="cursor-pointer">
-                <p>
-                  <div className="flex text-sm justify-center items-center">
-                    <FaUsers size={20} />
+            {user?.role !== "HREXECUTIVE" &&
+              user?.role !== "EMPLOYEE" &&
+              user?.role !== "CANDIDATE" && (
+                <>
+                  <NavLink
+                    className={({ isActive }) =>
+                      `p-3 hover:text-white font-medium  hover:bg-blue-700 rounded-md ${handleActiveLink(
+                        { isActive }
+                      )}`
+                    }
+                    to={selectRoute(user?.role, "all-candidates")}
+                  >
+                    <li className="cursor-pointer">
+                      <p>
+                        <div className="flex text-sm justify-center items-center">
+                          <PiUserSwitchBold size={20} />
+                        </div>
+                      </p>
+                    </li>
+                  </NavLink>
+                  <div className="flex text-sm justify-center -mt-3 items-center">
+                    Onboarding
                   </div>
-                </p>
-              </li>
-            </NavLink>
-            <div className="flex text-sm justify-center -mt-3 items-center">
-              Candidates
-            </div>
+                </>
+              )}
+
+            {user?.role !== "HREXECUTIVE" &&
+              user?.role !== "EMPLOYEE" &&
+              user?.role !== "CANDIDATE" && (
+                <>
+                  <NavLink
+                    className={({ isActive }) =>
+                      `p-3 hover:text-white font-medium  hover:bg-blue-700 rounded-md ${handleActiveLink(
+                        { isActive }
+                      )}`
+                    }
+                    to={selectRoute(user?.role, "all-employees")}
+                  >
+                    <li className="cursor-pointer">
+                      <p>
+                        <div className="flex text-sm justify-center items-center">
+                          <FaUsers size={20} />
+                        </div>
+                      </p>
+                    </li>
+                  </NavLink>
+                  <div className="flex text-sm justify-center -mt-3 items-center">
+                    Employees
+                  </div>
+                </>
+              )}
 
             <li className="cursor-pointer" onClick={handleLogout}>
               <p className="p-3 text-gray-700 bg-gray-200 hover:bg-red-500 px-4 font-medium hover:text-white rounded-md">

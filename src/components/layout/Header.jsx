@@ -43,7 +43,7 @@ export const Header = () => {
           </NavLink>
           <div className="hidden md:flex justify-center  items-center">
             <ul className="flex space-x-5">
-              {!jwt && (
+              {!data && (
                 <>
                   <NavLink to="/register">
                     <li className="group relative inline-block px-6 py-2 rounded-full text-white bg-purple-700  border-2 border-purple-700 font-bold overflow-hidden">
@@ -59,7 +59,7 @@ export const Header = () => {
                   </NavLink>
                 </>
               )}
-              {jwt && <AvatarMenu user={user} jwt={jwt} />}
+              {data && <AvatarMenu user={user} jwt={jwt} />}
             </ul>
           </div>
           <div

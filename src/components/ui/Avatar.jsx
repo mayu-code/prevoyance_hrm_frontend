@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import { selectRoute } from "../../api/service/RouteRedirectionService/RoutesRedireactionAvatar";
+import { clearUserCookie } from "../../cookies/UserCookie";
 
 const AvatarMenu = ({ user, jwt }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,6 +20,7 @@ const AvatarMenu = ({ user, jwt }) => {
       if (jwt) {
         localStorage.removeItem("jwt");
         dispatch(deleteUser());
+        clearUserCookie();
         navigate("/login");
       }
     }

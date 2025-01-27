@@ -6,6 +6,7 @@ import Loader from "../components/ui/Loader";
 import { Navigate, Outlet } from "react-router-dom";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { Sidebar } from "../components/ui/Sidebar";
+import { getUserFromCookie } from "../cookies/UserCookie";
 
 export const ProtectedRoute = ({ allowedRoles }) => {
   const [user1, setUser1] = useState(null);
@@ -19,13 +20,17 @@ export const ProtectedRoute = ({ allowedRoles }) => {
     setIsOpen(!isOpen);
   };
 
-  const data = useSelector((state) => state.userReducer.user);
+  // const data = useSelector((state) => state.userReducer.user);
+
+  const data = getUserFromCookie();
 
   useEffect(() => {
     if (jwtToken) {
       initializeUser(jwtToken, data, setIsLoading, setUser1);
+    } else {
+      setIsLoading(false);
     }
-  }, [jwtToken, data]);
+  }, [jwtToken]);
 
   if (isLoading) return <Loader />;
 
@@ -60,7 +65,7 @@ export const ProtectedRoute = ({ allowedRoles }) => {
             handleClick={handleToggle}
           />
         </div>
-        <div className="md:w-[95%] md:ml-[4%]">
+        <div className="md:w-[95%] md:ml-[7%]">
           <Outlet />
         </div>
       </section>

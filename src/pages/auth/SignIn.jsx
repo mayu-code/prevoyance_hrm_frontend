@@ -6,8 +6,9 @@ import { loginUserService } from "../../api/service/authService/AuthService";
 import { saveJwtToken } from "../../api/service/tokenService/SaveToken";
 import { addUser } from "../../redux/slice/UserSlice";
 import { encryptData } from "../../security/SecurityCrypto";
-import { redirectRoute } from "../../api/service/RouteRedirectionService/LoginRedirection";
 import { getUserByJwtService } from "../../api/service/userService/UserService";
+import { setUserCookie } from "../../cookies/UserCookie";
+import { selectRoute } from "../../api/service/RouteRedirectionService/RoutesRedireactionAvatar";
 
 export const SignIn = () => {
   const [loginData, setLoginData] = useState({
@@ -42,7 +43,7 @@ export const SignIn = () => {
     setErors(errors);
     if (Object.keys(errors).length !== 0) return;
 
-    console.log(loginData);
+    // console.log(loginData);
 
     const res = await loginUserService(loginData);
 
@@ -53,15 +54,17 @@ export const SignIn = () => {
     if (token) {
       saveJwtToken(res?.token);
 
-      console.log(res?.role);
+      // console.log(res?.role);
 
       const user = await getUserByJwtService(res?.token);
 
       dispatch(addUser(encryptData(user)));
 
-      const route = redirectRoute(res?.role);
+      setUserCookie(user);
 
-      console.log(route);
+      const route = selectRoute(user?.role, "dashboard");
+
+      // console.log(route);
 
       navigate(route);
     }

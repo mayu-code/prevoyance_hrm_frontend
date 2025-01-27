@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { CandidateTable } from "./CandidateTable";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getAllCandidatesService } from "../../../api/service/managerService/managerService";
+import { EmployeeTable } from "./EmployeeTable";
+import { getAllEmployeeService } from "../../../api/service/managerService/managerService";
 import { SearchFilter } from "../searchFilter/SearchFilter";
-import { getUserFromCookie } from "../../../cookies/UserCookie";
-import { selectRoute } from "../../../api/service/RouteRedirectionService/RoutesRedireactionAvatar";
 
-export const AllCandidates = () => {
+export const AllEmployees = () => {
   const paramReq = {
     query: undefined,
     department: undefined,
@@ -16,32 +14,29 @@ export const AllCandidates = () => {
   const [search, setSearch] = useState(paramReq);
 
   const {
-    data: candidates,
-    refetch: refetchCandidates,
+    data: employees,
+    refetch: refetchEmployees,
     isLoading,
   } = useQuery({
-    queryKey: ["candidates", search],
+    queryKey: ["employees", search],
     queryFn: async () => {
-      return await getAllCandidatesService(search);
+      return await getAllEmployeeService(search);
     },
   });
 
-  const user = getUserFromCookie();
-
-  const [selectedCandidates, setSelectedCandidates] = useState([]);
+  const [selectedEmployees, setSelectedEmployees] = useState([]);
 
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    const route = selectRoute(user?.role, "registration");
-
-    navigate(route);
+    navigate("/user/hr-manager/registration");
   };
 
-  // Handle Submit Selected Candidates
+  // Handle Submit Selected Employees
   const handleSubmit = () => {
-    console.log(selectedCandidates);
-    setSelectedCandidates([]);
+    console.log(selectedEmployees);
+    setSelectedEmployees([]);
+    // Add further actions, such as sending IDs to an API
   };
 
   return (
@@ -49,12 +44,13 @@ export const AllCandidates = () => {
       <SearchFilter
         search={search}
         setSearch={setSearch}
-        refetchData={refetchCandidates}
+        refetchData={refetchEmployees}
       />
+
       {/* Trigger Button */}
-      <div className="flex justify-between">
+      {/* <div className="flex justify-between">
         <div className="flex gap-4 justify-start">
-          {selectedCandidates.length > 0 && (
+          {selectedEmployees.length > 0 && (
             <button
               onClick={handleSubmit}
               className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
@@ -71,14 +67,13 @@ export const AllCandidates = () => {
             Add Candidate
           </button>
         </div>
-      </div>
+      </div> */}
 
-      <CandidateTable
-        candidates={candidates}
-        selectedCandidates={selectedCandidates}
-        setSelectedCandidates={setSelectedCandidates}
+      <EmployeeTable
+        employees={employees}
+        selectedEmployees={selectedEmployees}
+        setSelectedEmployees={setSelectedEmployees}
         isLoading={isLoading}
-        refetchCandidates={refetchCandidates}
       />
     </div>
   );

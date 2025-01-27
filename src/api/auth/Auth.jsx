@@ -11,3 +11,7 @@ export const registerUser = (registerReq) => {
 export const loginUser = (loginReq) => {
   return auth.post("/login", loginReq);
 };
+
+export const createPassword = (req) => {
+  return auth.post("/createPassword", req);
+};

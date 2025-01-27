@@ -12,12 +12,15 @@ import { RegistrationForm } from "../pages/common/registrationform/RegistrationF
 import DownloadDocument from "../api/service/downloadDocument/DownloadDocument";
 import { data } from "../components/ui/Utils";
 import { AllCandidates } from "../pages/common/AllCandidates/AllCandidates";
+import { AllEmployees } from "../pages/common/AllEmployess/AllEnployees";
+import { CreatePassword } from "../pages/createPassword/CreatePassword";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <AppLayout />,
     children: [
+      // Public Routes
       {
         path: "/",
         element: <Home />,
@@ -35,60 +38,102 @@ export const router = createBrowserRouter([
         element: <DownloadDocument data={data} />,
       },
       {
-        path: "/user",
-        element: (
-          <ProtectedRoute
-            allowedRoles={["SUPERADMIN", "ADMIN", "HRMANAGER", "HREXECUTIVE"]}
-          />
-        ),
+        path: "/createPassword",
+        element: <CreatePassword />,
+      },
+
+      // Protected Routes for Super Admin
+      {
+        path: "/sadmin",
+        element: <ProtectedRoute allowedRoles={["SUPERADMIN"]} />,
         children: [
           {
-            path: "/user/sadmin",
-            element: <ProtectedRoute allowedRoles={["SUPERADMIN"]} />,
-            children: [
-              {
-                path: "/user/sadmin/dashboard",
-                element: <SuperAdminDashboard />,
-              },
-            ],
+            path: "dashboard",
+            element: <SuperAdminDashboard />,
           },
           {
-            path: "/user/admin",
-            element: <ProtectedRoute allowedRoles={["ADMIN"]} />,
-            children: [
-              {
-                path: "/user/admin/dashboard",
-                element: <AdminDashboard />,
-              },
-            ],
+            path: "registration",
+            element: <RegistrationForm />,
           },
           {
-            path: "/user/hr-manager",
-            element: <ProtectedRoute allowedRoles={["HRMANAGER"]} />,
-            children: [
-              {
-                path: "/user/hr-manager/dashboard",
-                element: <HrManagerDashboard />,
-              },
-            ],
+            path: "all-candidates",
+            element: <AllCandidates />,
           },
           {
-            path: "/user/hr-executive",
-            element: <ProtectedRoute allowedRoles={["HREXECUTIVE"]} />,
-            children: [
-              {
-                path: "/user/hr-executive/dashboard",
-                element: <HrExecutiveDashboard />,
-              },
-              {
-                path: "/user/hr-executive/registration",
-                element: <RegistrationForm />,
-              },
-              {
-                path: "/user/hr-executive/all-candidates",
-                element: <AllCandidates />,
-              },
-            ],
+            path: "all-employees",
+            element: <AllEmployees />,
+          },
+        ],
+      },
+
+      // Protected Routes for Admin
+      {
+        path: "/admin",
+        element: <ProtectedRoute allowedRoles={["ADMIN"]} />,
+        children: [
+          {
+            path: "dashboard",
+            element: <AdminDashboard />,
+          },
+          {
+            path: "registration",
+            element: <RegistrationForm />,
+          },
+          {
+            path: "all-candidates",
+            element: <AllCandidates />,
+          },
+          {
+            path: "all-employees",
+            element: <AllEmployees />,
+          },
+        ],
+      },
+
+      // Protected Routes for HR Manager
+      {
+        path: "/hr-manager",
+        element: <ProtectedRoute allowedRoles={["HRMANAGER"]} />,
+        children: [
+          {
+            path: "dashboard",
+            element: <HrManagerDashboard />,
+          },
+          {
+            path: "registration",
+            element: <RegistrationForm />,
+          },
+          {
+            path: "all-candidates",
+            element: <AllCandidates />,
+          },
+          {
+            path: "all-employees",
+            element: <AllEmployees />,
+          },
+        ],
+      },
+
+      // Protected Routes for HR Executive
+      {
+        path: "/hr-executive",
+        element: <ProtectedRoute allowedRoles={["HREXECUTIVE"]} />,
+        children: [
+          {
+            path: "dashboard",
+            element: <HrExecutiveDashboard />,
+          },
+          {
+            path: "registration",
+            element: <RegistrationForm />,
+          },
+          {
+            path: "all-candidates",
+            element: <AllCandidates />,
+          },
+          {
+            path: "all-employees",
+            element: <AllEmployees />,
           },
         ],
       },

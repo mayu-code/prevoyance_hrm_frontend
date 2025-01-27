@@ -1,6 +1,4 @@
-import { loginUser, registerUser } from "../../auth/Auth";
-
-const jwt = localStorage.getItem("jwt");
+import { createPassword, loginUser, registerUser } from "../../auth/Auth";
 
 export const registerUserService = async (registerReq) => {
   try {
@@ -19,5 +17,15 @@ export const loginUserService = async (loginReq) => {
   } catch (error) {
     console.log(error);
     return error;
+  }
+};
+
+export const createPasswordService = async (req) => {
+  try {
+    const res = await createPassword(req);
+    return res?.data;
+  } catch (error) {
+    console.log(error);
+    return error?.response?.data;
   }
 };
