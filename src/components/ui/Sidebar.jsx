@@ -115,6 +115,30 @@ export const Sidebar = ({ user, isOpen, setIsOpen, handleClick }) => {
                 </>
               )}
 
+            {user?.role !== "HREXECUTIVE" && (
+              <>
+                <NavLink
+                  className={({ isActive }) =>
+                    `p-3 hover:text-white font-medium  hover:bg-blue-700 rounded-md ${handleActiveLink(
+                      { isActive }
+                    )}`
+                  }
+                  to={selectRoute(user?.role, "registration")}
+                >
+                  <li className="cursor-pointer">
+                    <p>
+                      <div className="flex text-sm justify-center items-center">
+                        <FaUsers size={20} />
+                      </div>
+                    </p>
+                  </li>
+                </NavLink>
+                <div className="flex text-sm justify-center -mt-3 items-center">
+                  <p className="text-nowrap">Add Candidate</p>
+                </div>
+              </>
+            )}
+
             <li className="cursor-pointer" onClick={handleLogout}>
               <p className="p-3 text-gray-700 bg-gray-200 hover:bg-red-500 px-4 font-medium hover:text-white rounded-md">
                 <div className="flex justify-center items-center">

@@ -96,13 +96,12 @@ export const SignUp = () => {
   return (
     <section className="mt-2">
       <div className="container w-[80%] bg-white border-2 border-purple-200 rounded-lg mx-auto grid grid-cols-1 md:grid-cols-2">
-        <div className="overflow-hidden hidden md:inline">
-          <img
-            src={signupImage}
-            alt="image"
-            className="w-full h-full object-cover"
-          />
-        </div>
+        <div
+          className="hidden md:block w-full bg-cover bg-blue-700"
+          style={{
+            backgroundImage: `url(${signupImage})`,
+          }}
+        ></div>
         <div className="w-[80%] mx-auto p-2 md:p-10">
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-8">

@@ -74,6 +74,7 @@ export const AllEmployees = () => {
         selectedEmployees={selectedEmployees}
         setSelectedEmployees={setSelectedEmployees}
         isLoading={isLoading}
+        refetchEmployees={refetchEmployees}
       />
     </div>
   );

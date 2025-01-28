@@ -14,6 +14,7 @@ import { data } from "../components/ui/Utils";
 import { AllCandidates } from "../pages/common/AllCandidates/AllCandidates";
 import { AllEmployees } from "../pages/common/AllEmployess/AllEnployees";
 import { CreatePassword } from "../pages/createPassword/CreatePassword";
+import { EmployeeDetails } from "../pages/common/employeeDetails/EmployeeDetails";
 
 export const router = createBrowserRouter([
   {

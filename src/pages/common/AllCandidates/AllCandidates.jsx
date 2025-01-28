@@ -79,6 +79,7 @@ export const AllCandidates = () => {
         setSelectedCandidates={setSelectedCandidates}
         isLoading={isLoading}
         refetchCandidates={refetchCandidates}
+        user={user}
       />
     </div>
   );

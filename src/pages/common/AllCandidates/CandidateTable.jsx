@@ -8,12 +8,14 @@ export const CandidateTable = ({
   setSelectedCandidates,
   isLoading,
   refetchCandidates,
+  user,
 }) => {
   const [showOnboardingForm, setShowOnboardingForm] = useState(false);
   const [onboardingData, setOnboardingData] = useState(null);
 
   // Handle row click to open the onboarding form
   const handleRowClick = (candidate) => {
+    // if(user?.role==="SUPERADMIN")
     setOnboardingData({
       id: candidate.id,
       name: `${candidate.firstName} ${candidate.lastName}`,

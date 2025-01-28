@@ -18,11 +18,33 @@ const OnboardingForm = ({
     role: "",
     position: preFilledData.position || "",
     department: preFilledData.department || "",
+    grossSalary: 0,
   });
+
+  const [errors, setErrors] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    validateFields(name, value);
     setFormValues({ ...formValues, [name]: value });
+  };
+
+  const validateFields = (name, value) => {
+    let newErrors = { ...errors };
+
+    const checkInteger = (input) => {
+      if (/^\d*$/.test(input)) return true;
+      else return false;
+    };
+
+    if (name === "role" && !value) newErrors.role = "Role is Required";
+    else if (name === "grossSalary" && value === "")
+      newErrors.grossSalary = "salary is Required";
+    else if (name === "grossSalary" && !checkInteger(value))
+      newErrors.grossSalary = "Enter Valid salary";
+    else delete newErrors[name];
+
+    setErrors(newErrors);
   };
 
   const user = getUserFromCookie();
@@ -50,7 +72,7 @@ const OnboardingForm = ({
   return (
     <>
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex top-16 items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white w-full max-w-2xl p-6 rounded shadow-lg transition-transform transform">
             <h2 className="text-2xl font-bold mb-4">Onboarding Candidate</h2>
             <form onSubmit={handleSubmit}>
@@ -119,7 +141,7 @@ const OnboardingForm = ({
                     name="role"
                     value={formValues.role}
                     onChange={handleInputChange}
-                    className="w-full h-10 focus:outline-none p-2 border-gray-300 rounded shadow-sm"
+                    className="w-full h-10 focus:outline-none p-2 border-2 focus:ring-2 rounded shadow-sm"
                     required
                   >
                     <option value="" disabled>
@@ -130,6 +152,28 @@ const OnboardingForm = ({
                     <option value="HRExecutive">HR Executive</option>
                     <option value="Employee">Employee</option>
                   </select>
+                  {errors?.role && (
+                    <p className="text-red-500 text-sm">{errors?.role}</p>
+                  )}
+                </div>
+
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Salary (Monthly)
+                  </label>
+                  <input
+                    required
+                    type="text"
+                    name="grossSalary"
+                    value={formValues.grossSalary}
+                    onChange={handleInputChange}
+                    className="w-full  h-10 p-2 border-2 focus:outline-none focus:ring-2 rounded shadow-sm"
+                  />
+                  {errors?.grossSalary && (
+                    <p className="text-red-500 text-sm">
+                      {errors?.grossSalary}
+                    </p>
+                  )}
                 </div>
               </div>
 

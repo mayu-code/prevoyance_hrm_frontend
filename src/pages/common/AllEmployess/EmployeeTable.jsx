@@ -1,26 +1,22 @@
 import React, { useState } from "react";
 import OnboardingForm from "../onboarding/OnboardingForm";
 import { PulseLoader } from "../../../components/ui/Loader/Loaders";
+import { EmployeeDetails } from "../employeeDetails/EmployeeDetails";
 
 export const EmployeeTable = ({
   employees,
   selectedEmployees,
   setSelectedEmployees,
   isLoading,
+  refetchEmployees,
 }) => {
-  const [showOnboardingForm, setShowOnboardingForm] = useState(false);
-  const [onboardingData, setOnboardingData] = useState(null);
+  const [showDetail, setShowDetail] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
   // Handle row click to open the onboarding form
   const handleRowClick = (candidate) => {
-    // setOnboardingData({
-    //   id: candidate.id,
-    //   name: `${candidate.firstName} ${candidate.lastName}`,
-    //   email: candidate.email,
-    //   position: candidate.position,
-    //   department: candidate.department,
-    // });
-    // setShowOnboardingForm(true);
+    setSelectedId(candidate.id);
+    setShowDetail(true);
   };
 
   // Handle checkbox change for individual employees
@@ -77,6 +73,7 @@ export const EmployeeTable = ({
             <th className="py-2 px-4 text-left border border-gray-200">
               Position
             </th>
+            <th className="py-2 px-4 text-left border border-gray-200">Role</th>
           </tr>
         </thead>
         <tbody>
@@ -147,6 +144,12 @@ export const EmployeeTable = ({
                 >
                   {candidate.position}
                 </td>
+                <td
+                  className="py-2 px-4 border font-medium border-gray-200"
+                  onClick={() => handleRowClick(candidate)}
+                >
+                  {candidate.role}
+                </td>
               </tr>
             ))
           )}
@@ -154,11 +157,12 @@ export const EmployeeTable = ({
       </table>
 
       {/* Onboarding Form Modal */}
-      {showOnboardingForm && (
-        <OnboardingForm
-          showModal={showOnboardingForm}
-          setShowModal={setShowOnboardingForm}
-          preFilledData={onboardingData}
+      {showDetail && (
+        <EmployeeDetails
+          showModal={showDetail}
+          setShowModal={setShowDetail}
+          id={selectedId}
+          refetchEmployees={refetchEmployees}
         />
       )}
     </div>
